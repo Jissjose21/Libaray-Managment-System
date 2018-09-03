@@ -1,4 +1,7 @@
-//HEADER FILES USED IN PROJECT
+/*************************************************
+HEADER FILES USED IN PROJECT
+*************************************************/
+
 #include<iostream>
 #include<iomanip>
 #include<conio.h>
@@ -10,7 +13,9 @@
 void clrscr(){}
 using namespace std;
 
-//CLASS USED IN PROJECT
+/*************************************************
+CLASS USED IN PROJECT
+*************************************************/
 
 class book
 {
@@ -122,13 +127,17 @@ class student
             }
 };
 
-//GLOBAL DECLARATION FOR STREAM OBJECT,OBJECTS
+/*************************************************
+GLOBAL DECLARATION FOR STREAM OBJECT,OBJECTS
+*************************************************/
 
 fstream fp, fp1;
 book bk;
 student st;
 
-//FUNCTION TO WRITE INTO THE FILE
+/*************************************************
+FUNCTION TO WRITE INTO THE FILE
+*************************************************/
 
 void write_book()
     {
@@ -157,7 +166,10 @@ void write_student()
         }while(ch=='y'||ch=='Y');
         fp.close();
     }
-//FUNCTION TO READ SPECIFIC RECORD FROM FILE
+
+/*************************************************
+FUNCTION TO READ SPECIFIC RECORD FROM FILE
+*************************************************/
 
 void display_spb(char n[])
     {
@@ -180,7 +192,7 @@ void display_sps(char n[])
     {
         cout<<endl<<".................STUDENT DETAILS..............."<<endl;
         int flag=0;
-        fp.open("Student.dat",ios::in);
+        fp.open("Student.dat",ios::binary|ios::in);
         while(fp.read((char*)&st,sizeof(student)))
             {
                 if(strcmpi(st.retadmno(),n)==0)
@@ -194,7 +206,9 @@ void display_sps(char n[])
             cout<<endl<<"STUDENT DOES NOT EXIST"<<endl;
     }
 
-//FUNCTION TO MODIFY RECORD OF FILE
+/*************************************************
+FUNCTION TO MODIFY RECORD OF FILE
+*************************************************/
 
 void modify_book()
     {
@@ -204,7 +218,7 @@ void modify_book()
         cout<<endl<<".......MODIFY BOOK RECORD......."<<endl;
         cout<<endl<<"Enter The Book Number:";
         cin>>n;
-        fp.open("Book.dat",ios::in|ios::out);
+        fp.open("Book.dat",ios::binary|ios::in|ios::out);
         while(fp.read((char*)&bk,sizeof(book)) && found==0)
             {
                if(strcmpi(bk.retbno(),n)==0)
@@ -231,7 +245,7 @@ void modify_student()
         cout<<endl<<".......MODIFY STUDENT RECORD......."<<endl;
         cout<<endl<<"Enter The Admission Number Of The Student";
         cin>>n;
-        fp.open("Student.dat",ios::in|ios::out);
+        fp.open("Student.dat",ios::binary|ios::in|ios::out);
         while(fp.read((char*)&st,sizeof(student))&&found==0)
             {
                 if(strcmpi(st.retadmno(),n)==0)
@@ -251,7 +265,9 @@ void modify_student()
             cout<<endl<<"Record Not Found"<<endl;
     }
 
-//FUNCTION TO DELETE RECORD OF FILE
+/*************************************************
+FUNCTION TO DELETE RECORD OF FILE
+*************************************************/
 
 void delete_student()
     {
@@ -261,7 +277,7 @@ void delete_student()
         cout<<endl<<".....DELETE STUDENT RECORD......."<<endl;
         cout<<endl<<"Enter The Admission Number Of the Student:";
         cin>>n;
-        fp.open("Student.dat",ios::in|ios::out);
+        fp.open("Student.dat",ios::binary|ios::in|ios::out);
         fstream fp2;
         fp2.open("Temp.dat",ios::out);
         fp.seekg(0,ios::beg);
@@ -289,9 +305,9 @@ void delete_book()
         cout<<endl<<".......DELETE BOOK......."<<endl;
         cout<<endl<<"Enter The Book Number:";
         cin>>n;
-        fp.open("Book.dat",ios::in|ios::out);
+        fp.open("Book.dat",ios::binary|ios::in|ios::out);
         fstream fp2;
-        fp2.open("Temp.dat",ios::out);
+        fp2.open("Temp.dat",ios::binary|ios::out);
         fp.seekg(0,ios::beg);
         while(fp.read((char*)&bk,sizeof(book)))
             {
@@ -307,15 +323,17 @@ void delete_book()
         cout<<endl<<"RECORD DELETED"<<endl;
     }
 
-//FUNCTION TO DISPLAY ALL STUDENT LIST
+/************************************************
+FUNCTION TO DISPLAY ALL STUDENT LIST
+*************************************************/
 
 void display_alls()
     {
         clrscr();
-        fp.open("Student.dat",ios::in);
+        fp.open("Student.dat",ios::binary|ios::in);
         if(!fp)
             {
-                cout<<"ERROE!!! FILE COULD NOT BE OPENED"<<endl;
+                cout<<"ERROR!!! FILE COULD NOT BE OPENED"<<endl;
                 return;
             }
         cout<<endl<<"......STUDENTS LIST......."<<endl;
@@ -327,15 +345,17 @@ void display_alls()
         fp.close();
     }
 
-//FUNCTION TO DISPLAY BOOK LIST
+/************************************************
+FUNCTION TO DISPLAY BOOK LIST
+************************************************/
 
 void display_allb()
     {
         clrscr();
-       fp.open("Book.dat",ios::in);
+       fp.open("Book.dat",ios::binary|ios::in);
        if(!fp)
             {
-                cout<<endl<<"ERRROR!!! FILE COULD NOT BE OPENED"<<endl;
+                cout<<endl<<"ERROR!!! FILE COULD NOT BE OPENED"<<endl;
                 return;
             }
         cout<<endl<<".......BOOK LIST......."<<endl;
@@ -346,8 +366,9 @@ void display_allb()
             }
         fp.close();
     }
-
-//FUNCTION OF ISSUE BOOK
+/************************************************
+FUNCTION OF ISSUE BOOK
+************************************************/
 
 void book_issue()
     {
@@ -357,8 +378,8 @@ void book_issue()
         cout<<endl<<".......BOOK ISSUE......."<<endl;
         cout<<endl<<"Enter The Student's Admission Number:";
         cin>>sn;
-        fp.open("Student.dat",ios::in|ios::out);
-        fp1.open("Book.dat",ios::in|ios::out);
+        fp.open("Student.dat",ios::binary|ios::in|ios::out);
+        fp1.open("Book.dat",ios::binary|ios::in|ios::out);
         while(fp.read((char*)&st,sizeof(student)) && found==0)
             {
                 if(strcmpi(st.retadmno(),sn)==0)
@@ -396,8 +417,9 @@ void book_issue()
         fp.close();
         fp1.close();
     }
-
-//FUNCTION TO DEPOSIT BOOK
+/************************************************
+FUNCTION TO DEPOSIT BOOK
+************************************************/
 
 void book_deposit()
     {
@@ -407,8 +429,8 @@ void book_deposit()
         cout<<endl<<".......BOOK DEPOSIT......."<<endl;
         cout<<endl<<"Students Admission Number:";
         cin>>sn;
-        fp.open("Student.dat",ios::in|ios::out);
-        fp1.open("Book.dat",ios::in|ios::out);
+        fp.open("Student.dat",ios::binary|ios::in|ios::out);
+        fp1.open("Book.dat",ios::binary|ios::in|ios::out);
         while(fp.read((char*)&st,sizeof(student))&& found==0)
             {
                 if(strcmpi(st.retadmno(),sn)==0)
@@ -449,18 +471,20 @@ void book_deposit()
         fp.close();
         fp1.close();
     }
-
-//INTODUCTION FUNCTION
+/************************************************
+INTODUCTION FUNCTION
+************************************************/
 
 void intro()
     {
         clrscr();
         cout<<"LIBRARY"<<"   MANAGMENT"<<"    SYSTEM";
         cout<<endl<<"MADE BY : JISS"<<endl;
-        cout<<endl<<"SCHOOL : DEPAUL"<<endl;
+        cout<<endl<<"SCHOOL : DEPAUL PUBLIC SCHOOL"<<endl;
     }
-
-//ADMINISTRATOR MENU FUNCTION
+/************************************************
+ADMINISTRATOR MENU FUNCTION
+************************************************/
 
 void ad_menu()
 	{
@@ -527,8 +551,9 @@ void admin_menu()
         else
             cout<<endl<<"Wrong Password Try Again!!!"<<endl;
     }
-
-//THE MAIN FUNCTION OF THE PROGRAM
+/************************************************
+THE MAIN FUNCTION OF THE PROGRAM
+************************************************/
 
 int main()
 {
